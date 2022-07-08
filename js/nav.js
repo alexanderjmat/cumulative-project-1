@@ -35,7 +35,22 @@ function updateNavOnLogin() {
   $navUserProfile.text(`${currentUser.username}`).show();
 }
 
-const submit = $('.nav-submit')
+const submit = $('.submit')
 submit.on('click', function() {
   $('#form').css('display', 'flex')
 })
+
+const fave = $('.favorites')
+fave.on('click', function(e) {
+  const $section = $('#favorite-stories');
+  const $lis = $('#all-stories-list')[0].children;
+  for (let $li of $lis) {
+    
+  }
+
+})
+
+
+
+const stories = $('.stories')
+

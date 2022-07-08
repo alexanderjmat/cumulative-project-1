@@ -37,3 +37,23 @@
 .story-user {
   display: block;
 }
+
+.star-off:before {
+  content: "\2606";
+  font-style: normal;
+  cursor: pointer;
+}
+
+.star {
+  margin-left: 0px;
+}
+
+.star-on:before {
+  content: "\2605";
+  font-style: normal;
+  cursor: pointer
+}
+
+.hidden {
+  display: none;
+}

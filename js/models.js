@@ -131,16 +131,53 @@ class User {
    * - password: a new password
    * - name: the user's full name
    */
+  // async storyUnfavorite(story) {
+  //   const token = this.loginToken;
+  //   await axios({
+  //     url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
+  //     method: "DELETE",
+  //     data: {token}
+  //   })
+  // }
 
+  // async storyFavorite(story) {
+  //   const token = this.loginToken;
+  //   await axios({
+  //     url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
+  //     method: "POST",
+  //     data: {token}
+  //   })
+  // }
   //await User.storyFavorite("cbb27a43-64af-4c6d-ab21-b33d8e60c8b5")
   //await User.storyUnfavorite("270aecc4-50bd-4345-a9f0-883b5b651a16")
-  static async storyFavorite(storyId) {
-    console.log(currentUser)
-    const res = await axios.post(`https://hack-or-snooze-v3.herokuapp.com/users/${currentUser.username}/favorites/${storyId}`, {"token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFqc3ByaW5nYm9hcmQiLCJpYXQiOjE2NTcyMDg2Njh9.SPh2kGZNXMf8sxhkUu-RuHf604L1WHRGLaW-CJYa9x0"})
+  async addFave(story) {
+    const id = storyList.stories[storyList.stories.indexOf(story)].storyId;
+    const token = this.loginToken;
+    const res = await axios({
+      url: `${BASE_URL}/users/${this.username}/favorites/${id}`,
+      method: "POST",
+      data: {token}
+    })    
+    this.favorites.push(story);
+    this.favoritesPage(story);
+
   }
 
-  static async storyUnfavorite(storyId) {
-    const res = await axios.delete(`https://hack-or-snooze-v3.herokuapp.com/users/${currentUser.username}/favorites/${storyId}`, {"token" : `${currentUser.loginToken}`})
+  async removeFave(story) {
+    console.log(story);
+    const filter = this.favorites.filter(value => {
+      return value.storyId == story.storyId;
+    })
+    const token = this.loginToken;
+    const id = filter[0].storyId;
+    const res = await axios({
+      url: `${BASE_URL}/users/${this.username}/favorites/${id}`,
+      method: "DELETE",
+      data: {token}
+    })
+    this.favorites.splice(this.favorites.indexOf(story), 1);
+    console.log(res);
+
   }
 
   static async signup(username, password, name) {
