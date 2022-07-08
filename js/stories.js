@@ -79,6 +79,11 @@ $(document).ready(function(e) {
   
 })
 
+function appendToSections(section) {
+  console.log(section)
+  return section
+}
+
 function getInfo() {
   const lis = document.children[0].children[1].children[1].children[1].children
   for (let li of lis) {
@@ -90,21 +95,14 @@ function getInfo() {
         li.children[0].children[0].className = "star-on";
       }
     }
-    const children = li.children[0].children[0];
-    // console.log(children);
-    for (let i = 0; i < children.length; i++) {
-      if (children[i].className == "star-on") {
-        appendToSections(lis[i])
-      }
+  }
+  for (let i = 0; i < lis.length; i++) {
+    if (lis[i].children[0].children[0].className == "star-on") {
+      appendToSections(lis[i])
     }
   }
+
   $('html').css('display', 'block')
-}
-
-function appendToSections(section) {
-  console.log(section)
-  return section
-
 }
 
 $('.stories-container.container').on('click', 'i', function(e) {
