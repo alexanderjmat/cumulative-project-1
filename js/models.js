@@ -144,8 +144,6 @@ class User {
   }
 
   async removeFave(story) {
-    console.log('test')
-    console.log(story);
     const filter = this.favorites.filter(value => {
       return value.storyId == story.storyId;
     })

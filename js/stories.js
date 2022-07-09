@@ -91,13 +91,9 @@ function appendToSections(section) {
 function getInfo() { 
   const lis = document.children[0].children[1].children[1].children[1].children
   const stories = $('#my-stories');
-  for (let i = 0; i < storyList.stories.length; i++) {
-    const storyPoster = currentUser.username;
-    if (lis[i].children[4].innerText == `posted by ${storyPoster}`) {
-      const myStory = $(`<li id="${lis[i].id}"><span class="trashcan"><i class="trashcan trash-logo"></i></span>${lis[i].innerHTML}</li>`)
-      $('#my-stories').append(myStory);
-    }
-  }
+  const allStories = $('#all-stories-list i')
+  console.log;
+
   for (let li of lis) {
     const id = li.id;
     const stories = currentUser.favorites;
@@ -113,10 +109,17 @@ function getInfo() {
       appendToSections(lis[i])
     }
   }
+  for (let i = 0; i < storyList.stories.length; i++) {
+    const storyPoster = currentUser.username;
+    if (lis[i].children[4].innerText == `posted by ${storyPoster}`) {
+      let myStory = $(`<li id="${lis[i].id}"><span class="trashcan"><i class="trashcan trash-logo"></i></span>${lis[i].innerHTML}</li>`)
+      $('#my-stories').append(myStory);
+    }
+  }
+  $('html').css('display', 'block')
   hackOrSnooze()
   favorites()
   myStoriesList()
-  $('html').css('display', 'block')
 }
 
 // $('.stories-container.container').on('click', 'i', function(e) {
@@ -150,15 +153,33 @@ function hackOrSnooze() {
       add.innerHTML = storyLi.innerHTML;
       currentUser.addFave(story[0])
       favs.append(add);
+      for (let i = 0; i < storyLis.children().length; i++) {
+        for (let story of myStories.children());
+        if (story.id == storyLis.children()[i].id) {
+          story.children[1].children[0].className = "star-on";
+
+        }
+
+      }
     }
     else {
+      const myStories = $('#my-stories')
       e.target.className = "star-off"
       currentUser.removeFave(story[0])
       for (let i = 0; i < favs.children.length; i++) {
         if (favs.children[i].id == storyLi.id) {
           favs.children[i].remove()
-
         }
+      }
+      for (let i = 0; i < storyLis.children().length; i++) {
+        for (let j = 0; j < myStories.children().length; j++) {
+          if (storyLis.children()[i].id == myStories.children()[j].id) {
+            console.log(myStories.children()[j])
+
+          }
+        } 
+       
+
       }
     }
   })
