@@ -57,3 +57,11 @@
 .hidden {
   display: none;
 }
+
+
+
+.trash-logo:before {
+  content: '\1F5D1';
+  font-style: normal;
+  cursor: pointer;
+}

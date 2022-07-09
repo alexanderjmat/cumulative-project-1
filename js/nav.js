@@ -9,7 +9,9 @@
 function navAllStories(evt) {
   console.debug("navAllStories", evt);
   hidePageComponents();
-  putStoriesOnPage();
+  $('#all-stories-list').css('display', 'block');
+  $('#favorite-stories').css('display', 'none');
+  $('#my-stories').css('display', 'none');
 }
 
 $body.on("click", "#nav-all", navAllStories);
@@ -35,22 +37,41 @@ function updateNavOnLogin() {
   $navUserProfile.text(`${currentUser.username}`).show();
 }
 
+
+
+const myStories = $('#my-stories')
+const allStories = $('#all-stories-list')
+const myFavorites = $('#favorite-stories')
+
+const myStoriesNav = $('.stories')
+const myFavoritesNav = $('.favorites')
+
+
+myFavoritesNav.on('click', function() {
+  allStories.css('display', 'none')
+  myStories.css('display', 'none');
+  $('#form').css('display', 'none')
+  myFavorites.css('display', 'block');
+
+})
+
+myStoriesNav.on('click', function() {
+  allStories.css('display', 'none')
+  myFavorites.css('display', 'none');
+  $('#form').css('display', 'none')
+  myStories.css('display', 'block');
+  
+
+})
+
 const submit = $('.submit')
 submit.on('click', function() {
-  $('#form').css('display', 'flex')
-})
-
-const fave = $('.favorites')
-fave.on('click', function(e) {
-  const $section = $('#favorite-stories');
-  const $lis = $('#all-stories-list')[0].children;
-  for (let $li of $lis) {
-    
+  myStories.css('display', 'none');
+  myFavorites.css('display', 'none');
+  allStories.css('display', 'block')
+  if ($('#form').css('display') == 'none') {
+    return $('#form').css('display', 'flex');
   }
-
+  return $('#form').css('display', 'none');
+ 
 })
-
-
-
-const stories = $('.stories')
-

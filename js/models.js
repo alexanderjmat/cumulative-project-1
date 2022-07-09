@@ -73,8 +73,7 @@ class StoryList {
    *
    * Returns the new Story instance
    */
-
-  static async addStory(user, newStory) {
+    static async addStory(user, newStory) {
     const story = {author: newStory.author, title: newStory.title, url: newStory.url, username: user}
     console.log(story);
     const newStoryI = new Story(story)
@@ -131,26 +130,8 @@ class User {
    * - password: a new password
    * - name: the user's full name
    */
-  // async storyUnfavorite(story) {
-  //   const token = this.loginToken;
-  //   await axios({
-  //     url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
-  //     method: "DELETE",
-  //     data: {token}
-  //   })
-  // }
-
-  // async storyFavorite(story) {
-  //   const token = this.loginToken;
-  //   await axios({
-  //     url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
-  //     method: "POST",
-  //     data: {token}
-  //   })
-  // }
-  //await User.storyFavorite("cbb27a43-64af-4c6d-ab21-b33d8e60c8b5")
-  //await User.storyUnfavorite("270aecc4-50bd-4345-a9f0-883b5b651a16")
   async addFave(story) {
+    console.log('test')
     const id = storyList.stories[storyList.stories.indexOf(story)].storyId;
     const token = this.loginToken;
     const res = await axios({
@@ -159,11 +140,11 @@ class User {
       data: {token}
     })    
     this.favorites.push(story);
-    this.favoritesPage(story);
 
   }
 
   async removeFave(story) {
+    console.log('test')
     console.log(story);
     const filter = this.favorites.filter(value => {
       return value.storyId == story.storyId;
@@ -176,8 +157,21 @@ class User {
       data: {token}
     })
     this.favorites.splice(this.favorites.indexOf(story), 1);
-    console.log(res);
+  }
 
+  async removeStory(story) {
+    console.log(story);
+    const filter = this.ownStories.filter(value => {
+      return value.storyId == story.storyId;
+    })
+    const id = filter[0].storyId;
+    const token = this.loginToken;
+    const res = await axios({
+      url: `${BASE_URL}/stories/${id}`,
+      method: "DELETE",
+      data: {token}
+    })
+    this.ownStories.splice(this.ownStories.indexOf(story), 1);
   }
 
   static async signup(username, password, name) {
