@@ -10,8 +10,7 @@ const formSubmit = $('#form')
 async function getAndShowStoriesOnStart() {
   storyList = await StoryList.getStories();
   $storiesLoadingMsg.remove();
-
-  putStoriesOnPage();
+  putStoriesOnPage()
 }
 
 /**
@@ -23,15 +22,11 @@ async function getAndShowStoriesOnStart() {
 
 function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
-
   const hostName = story.getHostName();
+  const star = Boolean(currentUser);
   return $(`
       <li id="${story.storyId}">
-        <span class="star">
-          <i class="star-off">
-
-          </i>
-        </span>
+        ${star ? isStarOnLoad(story, currentUser) : ""}
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -40,6 +35,14 @@ function generateStoryMarkup(story) {
         <small class="story-user">posted by ${story.username}</small>
       </li>
     `);
+}
+
+function isStarOnLoad(story, user) {
+  const fave = user.isFavorite(story);
+  const star = fave ? "star-on" : "star-off";
+  return `<span class="star"> 
+            <i class="${star}"></i>
+          </span>`
 }
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
@@ -63,7 +66,7 @@ async function submitStories() {
   const auth = $('#author')[0];
   const title = $('#title')[0];
   const url = $('#url')[0];  
-  await StoryList.addStory(currentUser, {title: title.value, author: author.value, url: `https://${url.value}`});
+  await StoryList.addStory(currentUser, {title: title.value, author: auth.value, url: `https://${url.value}`});
   getAndShowStoriesOnStart();
   setTimeout(appendToMyStories, 2000)
 }
@@ -122,6 +125,7 @@ function getInfo() {
   myStoriesList()
 }
 
+
 // $('.stories-container.container').on('click', 'i', function(e) {
 //   const storyLi = e.target.closest('li');
 //   const story = storyList.stories.filter(value => {
@@ -153,14 +157,13 @@ function hackOrSnooze() {
       add.innerHTML = storyLi.innerHTML;
       currentUser.addFave(story[0])
       favs.append(add);
-      for (let i = 0; i < storyLis.children().length; i++) {
-        for (let story of myStories.children());
-        if (story.id == storyLis.children()[i].id) {
-          story.children[1].children[0].className = "star-on";
-
+      for (let story of myStories.children()) {
+        if (story.id == storyLi.id) {
+          story.children[1].children[0].className = 'star-on';
         }
 
       }
+
     }
     else {
       const myStories = $('#my-stories')
@@ -171,13 +174,10 @@ function hackOrSnooze() {
           favs.children[i].remove()
         }
       }
-      for (let i = 0; i < storyLis.children().length; i++) {
-        for (let j = 0; j < myStories.children().length; j++) {
-          if (storyLis.children()[i].id == myStories.children()[j].id) {
-            console.log(myStories.children()[j])
-
-          }
-        } 
+      for (let story of myStories.children()) {
+        if (story.id == storyLi.id) {
+          story.children[1].children[0].className = 'star-off';
+        }
        
 
       }
@@ -189,6 +189,7 @@ function favorites() {
   const storyLis = $('#favorite-stories')
   storyLis.on('click', 'i', function(e) {
     const home = $('#all-stories-list').children();
+    const myStories = $('#my-stories').children();
     const storyLi = e.target.closest('li');
     const story = storyList.stories.filter(value => {
       return value.storyId == storyLi.id
@@ -201,6 +202,11 @@ function favorites() {
         li.children[0].children[0].className = "star-off"   
       }
     }
+    for (let li of myStories) {
+      if (li.id == storyLi.id) {
+        li.children[1].children[0].className = "star-off"
+      }
+    }
   })
 }
 
@@ -209,7 +215,6 @@ function myStoriesList() {
   const allStories = $('#all-stories-list').children()
   const favorites = $('#favorite-stories').children()
   storyLis.on('click', 'i', function(e) {
-    console.log(e.target);
     const storyLi = e.target.closest('li');
     const story = storyList.stories.filter(value => {
       return value.storyId == storyLi.id
@@ -231,23 +236,27 @@ function myStoriesList() {
           li.children[0].children[0].className = "star-off";
         }
       }
-      for (let li of favorites) {
+      for (let li of $('#favorite-stories').children()) {
         if (li.id == storyLi.id) {
-          li.remove()
+          li.remove();
         }
+
       }
     }
     else {
       e.target.className = 'star-on';
       currentUser.addFave(story[0])
-      for (let li of favorites) {
+      const favStory = document.createElement('li');
+      favStory.id = storyLi.id; 
+      favStory.innerHTML = storyLi.innerHTML
+      favStory.children[0].remove();
+      $('#favorite-stories').append(favStory)
+      for (let li of allStories) {
         if (li.id == storyLi.id) {
-          const add = document.createElement('li');
-          add.id = storyLi.id;
-          add.innerHTML = storyLi.innerHTML;
-          $('#favorite-stories').append(add);
+          li.children[0].children[0].className = "star-on";
         }
       }
+      
 
     }
 
@@ -257,6 +266,24 @@ function myStoriesList() {
 
 
 const container = document.querySelector('.stories-container.container');
+
+
+// for (let i = 0; i < storyLis.children().length; i++) {
+      //   for (let story of myStories.children());
+      //   if (story.id == storyLis.children()[i].id) {
+      //     story.children[1].children[0].className = "star-on";
+
+      //   }
+      // }
+
+      // for (let li of favorites) {
+      //   if (li.id == storyLi.id) {
+      //     const add = document.createElement('li');
+      //     add.id = storyLi.id;
+      //     add.innerHTML = storyLi.innerHTML;
+      //     $('#favorite-stories').append(add);
+      //   }
+      // }
 
 
 

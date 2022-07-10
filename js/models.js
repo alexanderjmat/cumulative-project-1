@@ -252,6 +252,10 @@ class User {
       return null;
     }
   }
+  isFavorite(story) {
+    return this.favorites.some(sStory => (sStory.storyId === story.storyId))
+  }
+
 }
 
 
