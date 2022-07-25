@@ -93,13 +93,13 @@ function appendToSections(section) {
 
 function getInfo() { 
   const lis = document.children[0].children[1].children[1].children[1].children
-  const stories = $('#my-stories');
-  const allStories = $('#all-stories-list i')
-  console.log;
+  // const stories = $('#my-stories');
+  // const allStories = $('#all-stories-list i')
 
   for (let li of lis) {
     const id = li.id;
-    const stories = currentUser.favorites;
+    if (currentUser) {
+      const stories = currentUser.favorites;
     for (let story of stories) {
       const storyId = story.storyId;
       if (storyId == id) {
@@ -119,6 +119,8 @@ function getInfo() {
       $('#my-stories').append(myStory);
     }
   }
+
+    }
   $('html').css('display', 'block')
   hackOrSnooze()
   favorites()
