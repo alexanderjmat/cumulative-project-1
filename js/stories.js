@@ -125,23 +125,6 @@ function getInfo() {
   myStoriesList()
 }
 
-
-// $('.stories-container.container').on('click', 'i', function(e) {
-//   const storyLi = e.target.closest('li');
-//   const story = storyList.stories.filter(value => {
-//     return value.storyId == storyLi.id;
-//   })
-//   console.log(e.target.className);
-//   if (e.target.className == "star-off") {
-//     e.target.className = "star-on"
-//     currentUser.addFave(story[0])
-//   }
-//   if (e.target.className == "star-on") {
-//     e.target.className = "star-off"
-//     currentUser.removeFave(story[0])
-//   }
-// })
-
 function hackOrSnooze() {
   const storyLis = $('#all-stories-list')
   storyLis.on('click', 'i', function(e) {
@@ -265,25 +248,7 @@ function myStoriesList() {
 }
 
 
-const container = document.querySelector('.stories-container.container');
-
-
-// for (let i = 0; i < storyLis.children().length; i++) {
-      //   for (let story of myStories.children());
-      //   if (story.id == storyLis.children()[i].id) {
-      //     story.children[1].children[0].className = "star-on";
-
-      //   }
-      // }
-
-      // for (let li of favorites) {
-      //   if (li.id == storyLi.id) {
-      //     const add = document.createElement('li');
-      //     add.id = storyLi.id;
-      //     add.innerHTML = storyLi.innerHTML;
-      //     $('#favorite-stories').append(add);
-      //   }
-      // }
+// const container = document.querySelector('.stories-container.container');
 
 
 

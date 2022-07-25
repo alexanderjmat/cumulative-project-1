@@ -1,6 +1,5 @@
 "use strict";
 //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFqc3ByaW5nYm9hcmQiLCJpYXQiOjE2NTcxOTk0ODN9.ag4w6d15fHzmH5H9sJUgYYhYb3N2hBf05UD1rkQbdi0
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFqc3ByaW5nYm9hcmQiLCJpYXQiOjE2NTcxOTk0ODN9.ag4w6d15fHzmH5H9sJUgYYhYb3N2hBf05UD1rkQbdi0
 const BASE_URL = "https://hack-or-snooze-v3.herokuapp.com";
 
 /******************************************************************************
@@ -26,7 +25,7 @@ class Story {
 
   getHostName() {
     // UNIMPLEMENTED: complete this function!
-    return "hostname.com";
+    return `${this.url}`;
   }
 }
 
