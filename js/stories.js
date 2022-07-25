@@ -95,10 +95,9 @@ function getInfo() {
   const lis = document.children[0].children[1].children[1].children[1].children
   // const stories = $('#my-stories');
   // const allStories = $('#all-stories-list i')
-
+  if (currentUser) {
   for (let li of lis) {
     const id = li.id;
-    if (currentUser) {
       const stories = currentUser.favorites;
     for (let story of stories) {
       const storyId = story.storyId;
@@ -106,7 +105,6 @@ function getInfo() {
         li.children[0].children[0].className = "star-on";
       }
     }
-  }
   for (let i = 0; i < lis.length; i++) {
     if (lis[i].children[0].children[0].className == "star-on") {
       appendToSections(lis[i])
@@ -121,6 +119,7 @@ function getInfo() {
   }
 
     }
+  }
   $('html').css('display', 'block')
   hackOrSnooze()
   favorites()
